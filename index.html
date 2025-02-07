@@ -125,40 +125,30 @@
         function handleSelection(selectElement) {
             let selectedValue = selectElement.value;
 
-            // If "iPhone" is selected, hide the main dropdowns and show the iPhone models dropdown
+            // If "iPhone" is selected, show iPhone models
             if (selectElement.id === "phones" && selectedValue === "iPhone") {
-                document.getElementById("dropdowns").style.display = "none";  // Hide main dropdowns
-                document.getElementById("iphoneModels").style.display = "block";  // Show iPhone models dropdown
+                document.getElementById("dropdowns").style.display = "none";  
+                document.getElementById("iphoneModels").style.display = "block";  
+                return;
             }
 
-            // If a selection is made in the "iPhone" model dropdown, hide all dropdowns and display the selected value
-            else if (selectElement.id === "iphone" && selectedValue !== " ") {
-                document.getElementById("iphoneModels").style.display = "none";  // Hide iPhone models
+            // If any selection is made (except empty), display selection and show order link
+            if (selectedValue !== " ") {
+                document.getElementById("dropdowns").style.display = "none";  
+                document.getElementById("iphoneModels").style.display = "none";  
+
                 let label = document.getElementById("selectedLabel");
                 label.innerText = "You selected: " + selectedValue;
-                label.style.display = "block";  // Show the selected label
+                label.style.display = "block";  
 
-                // Show the "Order" email link
+                // Show the "Order" email link with updated email
                 let orderLabel = document.getElementById("orderLabel");
                 orderLabel.innerText = "Order: " + selectedValue;
                 orderLabel.href = `mailto:dramirezmoreno1014@gmail.com?subject=Order Request&body=Someone ordered a ${selectedValue}`;
-                orderLabel.style.display = "block";  // Show the Order label as a clickable link
-            }
-
-            // If any other option is selected, hide all dropdowns and display the selected value
-            else if (selectedValue !== " ") {
-                document.getElementById("dropdowns").style.display = "none";  // Hide main dropdowns
-                let label = document.getElementById("selectedLabel");
-                label.innerText = "You selected: " + selectedValue;
-                label.style.display = "block";  // Show the selected label
-
-                // Show the "Order" email link
-                let orderLabel = document.getElementById("orderLabel");
-                orderLabel.innerText = "Order: " + selectedValue;
-                orderLabel.href = `mailto:dramirezmoreno2014@gmail.com?subject=Order Request&body=Someone ordered a ${selectedValue}`;
-                orderLabel.style.display = "block";  // Show the Order label as a clickable link
+                orderLabel.style.display = "block";  
             }
         }
     </script>
 </body>
 </html>
+
