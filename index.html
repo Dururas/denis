@@ -24,16 +24,23 @@
             margin-top: 20px;
         }
 
-        #selectedLabel {
+        h1 {
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
             display: none;
             font-size: 20px;
             font-weight: bold;
-            margin-top: 20px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
     </style>
 </head>
 <body>
-    <h1 class="hi">Denis</h1>
+    <h1>Denis</h1>
     <button id="myButton" onclick="showDropdowns()">Start</button>
 
     <div id="dropdowns" class="dropdown-container">
@@ -54,7 +61,7 @@
         </select>
     </div>
 
-    <p id="selectedLabel"></p>
+    <h2 id="selectedLabel"></h2>
 
     <script>
         function showDropdowns() {
