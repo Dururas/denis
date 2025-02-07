@@ -28,14 +28,14 @@
         .dropdown-container {
             display: none;
             margin-top: 20px;
-            text-align: center;  /* Center dropdowns */
+            text-align: center;
         }
 
         select {
             width: 200px;
             height: 50px;
             font-size: 20px;
-            margin-bottom: 10px;  /* Space between dropdowns */
+            margin-bottom: 10px;
         }
 
         label {
@@ -55,7 +55,7 @@
             font-weight: bold;
         }
 
-        /* Media query for smaller screens (e.g., mobile) */
+        /* Media query for mobile */
         @media (max-width: 600px) {
             select {
                 width: 150px;
@@ -85,7 +85,7 @@
 
     <div id="dropdowns" class="dropdown-container">
         <label for="phones">Phones:</label>
-        <select id="phones" onchange="handleSelection(this)">
+        <select id="phones" onchange="handlePhoneSelection(this)">
             <option value=" "> </option>
             <option value="iPhone">iPhone</option>
             <option value="Samsung">Samsung</option>
@@ -94,21 +94,51 @@
         <br><br>
 
         <label for="tablets">Tablets:</label>
-        <select id="tablets" onchange="handleSelection(this)">
+        <select id="tablets" onchange="handleTabletSelection(this)">
             <option value=" "> </option>
             <option value="iPad">iPad</option>
             <option value="Samsung Tab">Samsung Tab</option>
         </select>
     </div>
 
-    <!-- Hidden iPhone models dropdown -->
-    <div id="iphoneModels" class="dropdown-container">
+    <!-- Hidden Model Dropdowns -->
+    <div id="iphoneModels" class="dropdown-container" style="display: none;">
         <label for="iphone">Select iPhone:</label>
-        <select id="iphone" onchange="handleSelection(this)">
+        <select id="iphone" onchange="handleModelSelection(this, 'iPhone')">
             <option value=" "> </option>
             <option value="iPhone 12">iPhone 12</option>
             <option value="iPhone 13">iPhone 13</option>
             <option value="iPhone 14">iPhone 14</option>
+        </select>
+    </div>
+
+    <div id="samsungModels" class="dropdown-container" style="display: none;">
+        <label for="samsung">Select Samsung Model:</label>
+        <select id="samsung" onchange="handleModelSelection(this, 'Samsung')">
+            <option value=" "> </option>
+            <option value="Galaxy S21">Galaxy S21</option>
+            <option value="Galaxy S22">Galaxy S22</option>
+            <option value="Galaxy S23">Galaxy S23</option>
+        </select>
+    </div>
+
+    <div id="ipadModels" class="dropdown-container" style="display: none;">
+        <label for="ipad">Select iPad:</label>
+        <select id="ipad" onchange="handleModelSelection(this, 'iPad')">
+            <option value=" "> </option>
+            <option value="iPad Air">iPad Air</option>
+            <option value="iPad Pro">iPad Pro</option>
+            <option value="iPad Mini">iPad Mini</option>
+        </select>
+    </div>
+
+    <div id="samsungTabModels" class="dropdown-container" style="display: none;">
+        <label for="samsungTab">Select Samsung Tab:</label>
+        <select id="samsungTab" onchange="handleModelSelection(this, 'Samsung Tab')">
+            <option value=" "> </option>
+            <option value="Tab A">Tab A</option>
+            <option value="Tab S6">Tab S6</option>
+            <option value="Tab S8">Tab S8</option>
         </select>
     </div>
 
@@ -118,30 +148,34 @@
 
     <script>
         function showDropdowns() {
-            document.getElementById("myButton").style.display = "none"; 
-            document.getElementById("dropdowns").style.display = "block"; 
+            document.getElementById("myButton").style.display = "none";
+            document.getElementById("dropdowns").style.display = "block";
         }
 
-        function handleSelection(selectElement) {
+        function handlePhoneSelection(selectElement) {
+            document.getElementById("iphoneModels").style.display = selectElement.value === "iPhone" ? "block" : "none";
+            document.getElementById("samsungModels").style.display = selectElement.value === "Samsung" ? "block" : "none";
+        }
+
+        function handleTabletSelection(selectElement) {
+            document.getElementById("ipadModels").style.display = selectElement.value === "iPad" ? "block" : "none";
+            document.getElementById("samsungTabModels").style.display = selectElement.value === "Samsung Tab" ? "block" : "none";
+        }
+
+        function handleModelSelection(selectElement, category) {
             let selectedValue = selectElement.value;
 
-            // If "iPhone" is selected, show iPhone models
-            if (selectElement.id === "phones" && selectedValue === "iPhone") {
-                document.getElementById("dropdowns").style.display = "none";  
-                document.getElementById("iphoneModels").style.display = "block";  
-                return;
-            }
-
-            // If any selection is made (except empty), display selection and show order link
             if (selectedValue !== " ") {
                 document.getElementById("dropdowns").style.display = "none";  
                 document.getElementById("iphoneModels").style.display = "none";  
+                document.getElementById("samsungModels").style.display = "none";  
+                document.getElementById("ipadModels").style.display = "none";  
+                document.getElementById("samsungTabModels").style.display = "none";  
 
                 let label = document.getElementById("selectedLabel");
                 label.innerText = "You selected: " + selectedValue;
                 label.style.display = "block";  
 
-                // Show the "Order" email link with updated email
                 let orderLabel = document.getElementById("orderLabel");
                 orderLabel.innerText = "Order: " + selectedValue;
                 orderLabel.href = `mailto:dramirezmoreno1014@gmail.com?subject=Order Request&body=Someone ordered a ${selectedValue}`;
@@ -151,4 +185,3 @@
     </script>
 </body>
 </html>
-
