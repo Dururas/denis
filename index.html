@@ -96,7 +96,7 @@
         function handleSelection(selectElement) {
             let selectedValue = selectElement.value;
 
-            // Hide iPhone models dropdown unless iPhone is selected
+            // Show the iPhone models dropdown when "iPhone" is selected
             if (selectElement.id === "phones") {
                 if (selectedValue === "iPhone") {
                     document.getElementById("iphoneModels").style.display = "block";
@@ -105,8 +105,8 @@
                 }
             }
 
-            // If a selection is made, hide dropdowns and display the label
-            if (selectedValue !== " ") {
+            // Hide dropdowns and display the selected value as a label
+            if (selectedValue !== " " && selectElement.id !== "phones") {
                 document.getElementById("dropdowns").style.display = "none"; 
                 let label = document.getElementById("selectedLabel");
                 label.innerText = selectedValue;
@@ -116,4 +116,3 @@
     </script>
 </body>
 </html>
-
