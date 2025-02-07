@@ -65,22 +65,24 @@
 
         <br><br>
 
-    <div id="dropdown2" class="dropdown2-container">
-        <label for="types-of-phones">Varieties of iPhones:</label>
-        <select id="varieties-of-iPhones" onchange="handleSelection(this)">
-            <option value=" "> </option>
-            <option value="iPhone2G">iPhone2G</option>
-            <option value="iPhone3G(S)">iPhone3G(S)</option>
-            <option value="iPhone4">iPhone4</option>
-        </select>
-    </div>
-        
         <label for="tablets">Tablets:</label>
         <select id="tablets" onchange="handleSelection(this)">
             <option value=" "> </option>
             <option value="iPad">iPad</option>
             <option value="Samsung Tab">Samsung Tab</option>
         </select>
+
+        <br><br>
+
+        <!-- Hidden iPhone models dropdown -->
+        <div id="iphoneModels" style="display: none;">
+            <label for="iphone">Select iPhone:</label>
+            <select id="iphone" onchange="handleSelection(this)">
+                <option value="iPhone 12">iPhone 12</option>
+                <option value="iPhone 13">iPhone 13</option>
+                <option value="iPhone 14">iPhone 14</option>
+            </select>
+        </div>
     </div>
 
     <h2 id="selectedLabel"></h2>
@@ -89,23 +91,29 @@
         function showDropdowns() {
             document.getElementById("myButton").style.display = "none"; 
             document.getElementById("dropdowns").style.display = "block"; 
-            document.getElementById("dropdown2").style.display = "none;
         }
 
         function handleSelection(selectElement) {
             let selectedValue = selectElement.value;
 
+            // Hide iPhone models dropdown unless iPhone is selected
+            if (selectElement.id === "phones") {
+                if (selectedValue === "iPhone") {
+                    document.getElementById("iphoneModels").style.display = "block";
+                } else {
+                    document.getElementById("iphoneModels").style.display = "none";
+                }
+            }
+
+            // If a selection is made, hide dropdowns and display the label
             if (selectedValue !== " ") {
                 document.getElementById("dropdowns").style.display = "none"; 
                 let label = document.getElementById("selectedLabel");
                 label.innerText = selectedValue;
                 label.style.display = "block";
-            
-            if (selectedValue === "iPhone") {
-                document.getElementById("dropdown2").style.display = "block";
-            
             }
         }
     </script>
 </body>
 </html>
+
