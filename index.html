@@ -16,12 +16,18 @@
             height: 50px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 5px; /* Moves the button 5px down */
+            margin-top: 5px;
         }
 
-        /* Initially hide the dropdowns */
         .dropdown-container {
             display: none;
+            margin-top: 20px;
+        }
+
+        #selectedLabel {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
             margin-top: 20px;
         }
     </style>
@@ -30,29 +36,42 @@
     <h1 class="hi">Denis</h1>
     <button id="myButton" onclick="showDropdowns()">Start</button>
 
-    <!-- Dropdown containers -->
     <div id="dropdowns" class="dropdown-container">
         <label for="phones">Phones:</label>
-        <select id="phones">
-            <option value="iphone">iPhone</option>
-            <option value="samsung">Samsung</option>
+        <select id="phones" onchange="handleSelection(this)">
+            <option value=" "> </option>
+            <option value="iPhone">iPhone</option>
+            <option value="Samsung">Samsung</option>
         </select>
 
         <br><br>
 
         <label for="tablets">Tablets:</label>
-        <select id="tablets">
-            <option value="ipad">iPad</option>
-            <option value="samsung-tab">Samsung Tab</option>
+        <select id="tablets" onchange="handleSelection(this)">
+            <option value=" "> </option>
+            <option value="iPad">iPad</option>
+            <option value="Samsung Tab">Samsung Tab</option>
         </select>
     </div>
 
+    <p id="selectedLabel"></p>
+
     <script>
         function showDropdowns() {
-            document.getElementById("myButton").style.display = "none"; // Hide button
-            document.getElementById("dropdowns").style.display = "block"; // Show both dropdowns
+            document.getElementById("myButton").style.display = "none"; 
+            document.getElementById("dropdowns").style.display = "block"; 
+        }
+
+        function handleSelection(selectElement) {
+            let selectedValue = selectElement.value;
+
+            if (selectedValue !== " ") {
+                document.getElementById("dropdowns").style.display = "none"; 
+                let label = document.getElementById("selectedLabel");
+                label.innerText = selectedValue;
+                label.style.display = "block";
+            }
         }
     </script>
-
 </body>
 </html>
