@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Denis Tech Store</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Dark mode styles */
@@ -16,1780 +14,254 @@
       --text-secondary: #666666;
       --primary-color: #3b82f6;
       --primary-hover: #2563eb;
-      --card-bg: #ffffff;
-      --card-border: #e5e7eb;
-      --header-bg: #ffffff;
-      --input-bg: #f9fafb;
     }
 
     .dark {
       --background: #111827;
       --text-primary: #f3f4f6;
       --text-secondary: #9ca3af;
-      --primary-color: #3b82f6;
-      --primary-hover: #60a5fa;
-      --card-bg: #1f2937;
-      --card-border: #374151;
-      --header-bg: #111827;
-      --input-bg: #374151;
     }
 
     body {
       background-color: var(--background);
       color: var(--text-primary);
-      transition: background-color 0.3s, color 0.3s;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-color: var(--card-border);
+      font-family: sans-serif;
     }
 
     .header {
-      background-color: var(--header-bg);
-      border-color: var(--card-border);
-    }
-
-    .form-input {
-      background-color: var(--input-bg);
-      color: var(--text-primary);
-      border-color: var(--card-border);
-    }
-
-    /* Make buttons and active elements more visible in dark mode */
-    .dark .btn-primary {
-      background-color: var(--primary-color);
-    }
-
-    .dark .btn-primary:hover {
-      background-color: var(--primary-hover);
+      padding: 20px;
+      text-align: center;
     }
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 20px;
     }
 
-    @media (max-width: 640px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
     }
 
-    /* Hide pages initially */
-    #login-page, #register-page, #cart-page, #settings-page, #product-detail-page {
-      display: none;
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
-    .active-tab {
-      color: var(--primary-color);
-      border-bottom: 2px solid var(--primary-color);
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
     }
 
-    /* For quantity selector */
-    .quantity-selector {
-      display: flex;
-      align-items: center;
-    }
-
-    .quantity-selector button {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .checkout {
+      margin: 20px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header shadow-sm sticky top-0 z-50 border-b">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center cursor-pointer" onclick="navigateTo('home-page')">
-        <span class="bg-blue-600 text-white text-xl font-bold py-1 px-3 rounded">Denis</span>
-        <span class="ml-2 font-semibold text-gray-700 dark:text-gray-300 hidden sm:inline">Tech Store</span>
-      </div>
+  <div class="header">
+    <h1>Welcome to Denis Tech Store</h1>
+  </div>
 
-      <!-- Navigation Menu - Only visible when logged in -->
-      <div id="nav-menu" class="hidden">
-        <div class="flex items-center space-x-4">
-          <button onclick="navigateTo('cart-page')" class="relative">
-            <i class="fas fa-shopping-cart text-gray-700 dark:text-gray-300"></i>
-            <span id="cart-count" class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-          </button>
-
-          <div class="relative group">
-            <button class="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md transition duration-200">
-              <i class="fas fa-user-circle"></i>
-              <span id="username-display" class="text-sm font-medium">User</span>
-              <i class="fas fa-chevron-down text-xs"></i>
-            </button>
-
-            <div class="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg overflow-hidden hidden group-hover:block">
-              <div onclick="navigateTo('settings-page')" class="block px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-150 cursor-pointer">
-                <i class="fas fa-cog mr-2"></i>Settings
-              </div>
-              <div onclick="logout()" class="block px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-150 cursor-pointer">
-                <i class="fas fa-sign-out-alt mr-2"></i>Logout
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Login/Register buttons - Only visible when logged out -->
-      <div id="auth-buttons" class="flex space-x-2">
-        <button onclick="navigateTo('login-page')" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900 transition">Login</button>
-        <button onclick="navigateTo('register-page')" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Register</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content Area -->
-  <main class="container mx-auto px-4 py-8">
-    <!-- Home Page / Products List -->
-    <div id="home-page">
-      <h1 class="text-2xl font-bold mb-6">Featured Products</h1>
-
-      <!-- Filters Row -->
-      <div class="mb-6 flex flex-col sm:flex-row justify-between items-start gap-4">
-        <div class="flex flex-wrap gap-2">
-          <select id="category-filter" class="form-input px-4 py-2 rounded-md border focus:ring-blue-500 focus:border-blue-500">
-            <option value="">All Categories</option>
-            <option value="Smartphones">Smartphones</option>
-            <option value="Laptops">Laptops</option>
-            <option value="Accessories">Accessories</option>
-            <option value="Audio">Audio</option>
-          </select>
-
-          <select id="brand-filter" class="form-input px-4 py-2 rounded-md border focus:ring-blue-500 focus:border-blue-500">
-            <option value="">All Brands</option>
-            <option value="Apple">Apple</option>
-            <option value="Samsung">Samsung</option>
-            <option value="Dell">Dell</option>
-            <option value="Sony">Sony</option>
-            <option value="Bose">Bose</option>
-          </select>
-        </div>
-
-        <div class="relative">
-          <input id="search-input" type="text" placeholder="Search products..." class="form-input pl-10 pr-4 py-2 rounded-md border w-full sm:w-64 focus:ring-blue-500 focus:border-blue-500">
-          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        </div>
-      </div>
-
-      <!-- Products Grid -->
-      <div id="products-container" class="product-grid"></div>
+  <div class="product-grid" id="product-grid">
+    <div class="card">
+      <h2>Product 1</h2>
+      <p>Price: $1 Depto</p>
+      <button class="btn-primary" onclick="addToCart('Product 1', 1)">Add to Cart</button>
     </div>
 
-    <!-- Login Page -->
-    <div id="login-page" class="flex min-h-[80vh]">
-      <div class="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12">
-        <div class="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 class="mt-6 text-center text-3xl font-extrabold">Sign in to your account</h2>
-        </div>
-
-        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form id="login-form" class="space-y-6">
-              <div>
-                <label for="login-username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-                <div class="mt-1">
-                  <input id="login-username" name="username" type="text" required class="form-input appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-
-              <div>
-                <label for="login-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                <div class="mt-1">
-                  <input id="login-password" name="password" type="password" required class="form-input appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                  <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Remember me</label>
-                </div>
-              </div>
-
-              <div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign in</button>
-              </div>
-            </form>
-
-            <div class="mt-6">
-              <div class="relative">
-                <div class="absolute inset-0 flex items-center">
-                  <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
-                </div>
-                <div class="relative flex justify-center text-sm">
-                  <span class="px-2 bg-white dark:bg-gray-800 text-gray-500">Or</span>
-                </div>
-              </div>
-
-              <div class="mt-6">
-                <div class="text-center">
-                  <p class="text-sm text-gray-600 dark:text-gray-400">Don't have an account?</p>
-                  <button onclick="navigateTo('register-page')" class="mt-2 text-blue-600 hover:text-blue-500">Create an account</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hidden lg:block lg:flex-1 bg-blue-600 flex flex-col justify-center text-white p-12">
-        <div class="max-w-md mx-auto">
-          <h2 class="text-3xl font-extrabold mb-6">Welcome to Denis Tech Store</h2>
-          <p class="text-xl mb-8">Your one-stop destination for the latest technology products at competitive prices.</p>
-          <ul class="space-y-4">
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Wide range of premium tech products</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Secure checkout process</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Express delivery options</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>24/7 customer support</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="card">
+      <h2>Product 2</h2>
+      <p>Price: $3 Depto</p>
+      <button class="btn-primary" onclick="addToCart('Product 2', 3)">Add to Cart</button>
     </div>
 
-    <!-- Register Page -->
-    <div id="register-page" class="flex min-h-[80vh]">
-      <div class="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12">
-        <div class="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 class="mt-6 text-center text-3xl font-extrabold">Create your account</h2>
-        </div>
-
-        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form id="register-form" class="space-y-6">
-              <div>
-                <label for="register-username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-                <div class="mt-1">
-                  <input id="register-username" name="username" type="text" required class="form-input appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-
-              <div>
-                <label for="register-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email (optional)</label>
-                <div class="mt-1">
-                  <input id="register-email" name="email" type="email" class="form-input appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-
-              <div>
-                <label for="register-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                <div class="mt-1">
-                  <input id="register-password" name="password" type="password" required class="form-input appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-
-              <div>
-                <label for="register-confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
-                <div class="mt-1">
-                  <input id="register-confirm-password" name="confirmPassword" type="password" required class="form-input appearance-none block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-
-              <div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Account</button>
-              </div>
-            </form>
-
-            <div class="mt-6">
-              <div class="relative">
-                <div class="absolute inset-0 flex items-center">
-                  <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
-                </div>
-                <div class="relative flex justify-center text-sm">
-                  <span class="px-2 bg-white dark:bg-gray-800 text-gray-500">Or</span>
-                </div>
-              </div>
-
-              <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600 dark:text-gray-400">Already have an account?</p>
-                <button onclick="navigateTo('login-page')" class="mt-2 text-blue-600 hover:text-blue-500">Sign in</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hidden lg:block lg:flex-1 bg-blue-600 flex flex-col justify-center text-white p-12">
-        <div class="max-w-md mx-auto">
-          <h2 class="text-3xl font-extrabold mb-6">Join Denis Tech Store Today</h2>
-          <p class="text-xl mb-8">Create an account to enjoy these benefits:</p>
-          <ul class="space-y-4">
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Save your favorite products</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Faster checkout experience</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Track your order history</span>
-            </li>
-            <li class="flex items-start">
-              <svg class="h-6 w-6 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span>Exclusive deals and offers</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cart Page -->
-    <div id="cart-page">
-      <div class="max-w-5xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-          <h1 class="text-2xl font-bold">Your Shopping Cart</h1>
-          <button onclick="navigateTo('home-page')" class="flex items-center text-blue-600 hover:text-blue-800">
-            <i class="fas fa-arrow-left mr-2"></i>
-            Continue Shopping
-          </button>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
-          <div id="cart-items-container" class="divide-y divide-gray-200 dark:divide-gray-700">
-            <!-- Cart items will be added here dynamically -->
-            <div class="p-8 text-center text-gray-500 dark:text-gray-400" id="empty-cart-message">
-              <i class="fas fa-shopping-cart text-5xl mb-4"></i>
-              <p class="text-xl">Your cart is empty</p>
-              <p class="mt-2">Browse our collection and add products to your cart</p>
-              <button onclick="navigateTo('home-page')" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                Start Shopping
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Order Summary -->
-        <div id="order-summary" class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div class="p-6">
-            <h2 class="text-lg font-semibold mb-4">Order Summary</h2>
-            <div class="space-y-3 mb-6">
-              <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
-                <span id="cart-subtotal">$0.00</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-400">Shipping</span>
-                <span>Free</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600 dark:text-gray-400">Tax</span>
-                <span id="cart-tax">$0.00</span>
-              </div>
-              <div class="border-t border-gray-200 dark:border-gray-700 pt-3 mt-3">
-                <div class="flex justify-between font-semibold">
-                  <span>Total</span>
-                  <span id="cart-total">$0.00</span>
-                </div>
-              </div>
-            </div>
-
-            <button onclick="handleCheckout()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition" id="checkout-button">
-              Proceed to Checkout
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Product Detail Page -->
-    <div id="product-detail-page">
-      <div class="max-w-6xl mx-auto">
-        <button onclick="navigateTo('home-page')" class="flex items-center text-blue-600 hover:text-blue-800 mb-6">
-          <i class="fas fa-arrow-left mr-2"></i>
-          Back to Products
-        </button>
-
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          <div class="md:flex">
-            <!-- Product Image -->
-            <div class="md:w-1/2 p-6 flex items-center justify-center">
-              <img id="product-detail-image" src="" alt="Product" class="max-w-full h-auto max-h-96 object-contain">
-            </div>
-
-            <!-- Product Info -->
-            <div class="md:w-1/2 p-6 md:border-l border-gray-200 dark:border-gray-700">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h1 id="product-detail-name" class="text-2xl font-bold mb-2"></h1>
-                  <div class="flex items-center mb-4">
-                    <span id="product-detail-brand" class="text-gray-600 dark:text-gray-400 mr-4"></span>
-                    <span id="product-detail-category" class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded"></span>
-                  </div>
-                </div>
-                <div>
-                  <div id="product-detail-price" class="text-2xl font-bold text-blue-600"></div>
-                  <div id="product-detail-stock" class="text-sm text-gray-600 dark:text-gray-400 mt-1"></div>
-                </div>
-              </div>
-
-              <p id="product-detail-description" class="text-gray-700 dark:text-gray-300 my-6"></p>
-
-              <!-- Quantity selector and Add to Cart -->
-              <div class="mt-8">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quantity</label>
-                <div class="flex items-center">
-                  <div class="quantity-selector border border-gray-300 dark:border-gray-600 rounded-md">
-                    <button id="decrease-quantity" class="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md">-</button>
-                    <input id="product-quantity" type="number" min="1" value="1" class="form-input w-12 text-center border-0 focus:ring-0">
-                    <button id="increase-quantity" class="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md">+</button>
-                  </div>
-
-                  <button id="add-to-cart-btn" class="ml-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md transition flex-grow sm:flex-grow-0">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-
-              <!-- Admin Restock Panel (only visible for admin users) -->
-              <div id="admin-panel" class="mt-8 p-4 border border-gray-300 dark:border-gray-600 rounded-md hidden">
-                <h3 class="font-semibold mb-2">Admin Panel - Restock Product</h3>
-                <div class="flex items-center">
-                  <input id="restock-amount" type="number" min="1" value="10" class="form-input w-20 text-center mr-4">
-                  <button id="restock-btn" class="bg-green-600 hover:bg-green-700 text-white py-1 px-4 rounded-md transition">
-                    Restock
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Settings Page -->
-    <div id="settings-page">
-      <div class="max-w-2xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-          <h1 class="text-2xl font-bold">Account Settings</h1>
-          <button onclick="navigateTo('home-page')" class="flex items-center border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 rounded-md transition">
-            <i class="fas fa-arrow-left mr-2"></i>
-            Back to Shop
-          </button>
-        </div>
-
-        <!-- Settings Tabs -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
-          <div class="flex border-b border-gray-200 dark:border-gray-700">
-            <button 
-              onclick="switchSettingsTab('profile')" 
-              class="settings-tab px-6 py-3 font-medium transition duration-150 active-tab" 
-              data-tab="profile"
-            >
-              Profile
-            </button>
-            <button 
-              onclick="switchSettingsTab('security')" 
-              class="settings-tab px-6 py-3 font-medium transition duration-150 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200" 
-              data-tab="security"
-            >
-              Security
-            </button>
-            <button 
-              onclick="switchSettingsTab('preferences')" 
-              class="settings-tab px-6 py-3 font-medium transition duration-150 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200" 
-              data-tab="preferences"
-            >
-              Preferences
-            </button>
-          </div>
-
-          <!-- Profile Settings -->
-          <div id="profile-settings" class="settings-content p-6">
-            <div class="flex flex-col sm:flex-row gap-6 mb-6">
-              <div class="sm:w-1/3 flex flex-col items-center">
-                <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 mb-3">
-                  <i class="fas fa-user-circle text-4xl"></i>
-                </div>
-                <button class="text-blue-600 hover:text-blue-500 text-sm font-medium">Change Avatar</button>
-              </div>
-
-              <div class="sm:w-2/3">
-                <form id="profile-form" class="space-y-4">
-                  <div<div>
-                    <label for="profile-username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
-                    <input id="profile-username" type="text" class="form-input w-full px-3 py-2 border rounded-md">
-                  </div>
-
-                  <div>
-                    <label for="profile-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                    <input id="profile-email" type="email" class="form-input w-full px-3 py-2 border rounded-md" placeholder="Enter your email">
-                  </div>
-
-                  <div>
-                    <label for="profile-phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
-                    <input id="profile-phone" type="tel" class="form-input w-full px-3 py-2 border rounded-md" placeholder="(123) 456-7890">
-                  </div>
-
-                  <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
-                    Save Changes
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <!-- Security Settings -->
-          <div id="security-settings" class="settings-content p-6 hidden">
-            <h2 class="text-xl font-semibold mb-4">Change Password</h2>
-            <div class="max-w-md mx-auto">
-              <form id="password-form" class="space-y-4">
-                <div>
-                  <label for="current-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Current Password</label>
-                  <input id="current-password" type="password" class="form-input w-full px-3 py-2 border rounded-md">
-                </div>
-
-                <div>
-                  <label for="new-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password</label>
-                  <input id="new-password" type="password" class="form-input w-full px-3 py-2 border rounded-md">
-                </div>
-
-                <div>
-                  <label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm New Password</label>
-                  <input id="confirm-password" type="password" class="form-input w-full px-3 py-2 border rounded-md">
-                </div>
-
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
-                  Change Password
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <!-- Preferences Settings -->
-          <div id="preferences-settings" class="settings-content p-6 hidden">
-            <h2 class="text-xl font-semibold mb-4">Preferences</h2>
-            <div class="space-y-6">
-              <div class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <div>
-                  <h3 class="font-medium">Theme</h3>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">Toggle between light and dark mode</p>
-                </div>
-                <button id="theme-toggle" class="p-2 border border-gray-300 dark:border-gray-600 rounded-md">
-                  <i id="theme-icon" class="fas fa-moon"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed top-4 right-4 max-w-xs bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto hidden overflow-hidden z-50">
-    <div class="p-4">
-      <div class="flex items-start">
-        <div id="toast-icon" class="flex-shrink-0">
-          <i class="fas fa-check-circle text-green-500 text-lg"></i>
-        </div>
-        <div class="ml-3 w-0 flex-1">
-          <p id="toast-message" class="text-sm font-medium text-gray-900 dark:text-gray-100"></p>
-        </div>
-        <div class="ml-4 flex-shrink-0 flex">
-          <button onclick="hideToast()" class="inline-flex text-gray-400 hover:text-gray-500">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
+    <div class="card">
+      <h2>Product 3</h2>
+      <p>Price: $5 Depto</p>
+      <button class="btn-primary" onclick="addToCart('Product 3', 5)">Add to Cart</button>
     </div>
   </div>
 
-  <!-- JavaScript -->
+  <div class="checkout">
+    <h2>Your Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <h3 id="total-price">Total: $0 Depto</h3>
+    <button class="btn-primary" id="checkout-btn">Checkout</button>
+  </div>
+
   <script>
-    // ==================== DATA STORE ====================
+    const cart = [];
+    const cartItemsElement = document.getElementById('cart-items');
+    const totalPriceElement = document.getElementById('total-price');
 
-    // Sample data - in a real app, this would come from an API
-    const products = [
-      {
-        id: 1,
-        name: "iPhone 13 Pro",
-        brand: "Apple",
-        category: "Smartphones",
-        price: 4.99,
-        stock: 50,
-        description: "The latest iPhone with Pro camera system, A15 Bionic chip, and Super Retina XDR display with ProMotion.",
-        icon: "📱"
-      },
-      {
-        id: 2,
-        name: "Samsung Galaxy S21",
-        brand: "Samsung",
-        category: "Smartphones",
-        price: 3.99,
-        stock: 65,
-        description: "Flagship smartphone with 8K video, Dynamic AMOLED display, and powerful performance.",
-        icon: "📱"
-      },
-      {
-        id: 3,
-        name: "Pixel 6 Pro",
-        brand: "Google",
-        category: "Smartphones",
-        price: 4.49,
-        stock: 40,
-        description: "Google's flagship phone with an advanced camera system, Google Tensor chip, and stunning display.",
-        icon: "📱"
-      },
-      {
-        id: 4,
-        name: "iPhone 13",
-        brand: "Apple",
-        category: "Smartphones",
-        price: 3.99,
-        stock: 75,
-        description: "Featuring a bright Super Retina XDR display, Ceramic Shield, and A15 Bionic chip.",
-        icon: "📱"
-      },
-      {
-        id: 5,
-        name: "OnePlus 9 Pro",
-        brand: "OnePlus",
-        category: "Smartphones",
-        price: 2.99,
-        stock: 35,
-        description: "Flagship smartphone with Hasselblad camera, fluid display, and fast charging.",
-        icon: "📱"
-      },
-      {
-        id: 6,
-        name: "MacBook Pro 16",
-        brand: "Apple",
-        category: "Laptops",
-        price: 4.99,
-        stock: 25,
-        description: "Powerful laptop with M1 Pro or M1 Max chip, stunning Liquid Retina XDR display, and up to 21 hours of battery life.",
-        icon: "💻"
-      },
-      {
-        id: 7,
-        name: "Dell XPS 15",
-        brand: "Dell",
-        category: "Laptops",
-        price: 4.79,
-        stock: 30,
-        description: "Premium laptop with InfinityEdge display, 11th Gen Intel processors, and stunning design.",
-        icon: "💻"
-      },
-      {
-        id: 8,
-        name: "HP Spectre x360",
-        brand: "HP",
-        category: "Laptops",
-        price: 4.89,
-        stock: 20,
-        description: "Convertible laptop with 4K OLED display, Intel Evo platform, and gem-cut design.",
-        icon: "💻"
-      },
-      {
-        id: 9,
-        name: "Lenovo ThinkPad X1 Carbon",
-        brand: "Lenovo",
-        category: "Laptops",
-        price: 4.99,
-        stock: 15,
-        description: "Ultra-lightweight business laptop with all-day battery life and enhanced security features.",
-        icon: "💻"
-      },
-      {
-        id: 10,
-        name: "MacBook Air",
-        brand: "Apple",
-        category: "Laptops",
-        price: 4.99,
-        stock: 45,
-        description: "Thin and light laptop with M1 chip, silent fanless design, and up to 18 hours of battery life.",
-        icon: "💻"
-      },
-      {
-        id: 11,
-        name: "AirPods Pro",
-        brand: "Apple",
-        category: "Audio",
-        price: 1.99,
-        stock: 100,
-        description: "Wireless earbuds featuring active noise cancellation, transparency mode, and adaptive EQ.",
-        icon: "🎧"
-      },
-      {
-        id: 12,
-        name: "Sony WH-1000XM4",
-        brand: "Sony",
-        category: "Audio",
-        price: 2.99,
-        stock: 40,
-        description: "Industry-leading noise cancelling wireless headphones with exceptional sound quality.",
-        icon: "🎧"
-      },
-      {
-        id: 13,
-        name: "Bose QuietComfort Earbuds",
-        brand: "Bose",
-        category: "Audio",
-        price: 2.49,
-        stock: 35,
-        description: "Noise cancelling earbuds with clear sound and deep bass.",
-        icon: "🎧"
-      },
-      {
-        id: 14,
-        name: "Samsung Galaxy Buds Pro",
-        brand: "Samsung",
-        category: "Audio",
-        price: 1.99,
-        stock: 50,
-        description: "True wireless earbuds with intelligent active noise cancellation and immersive sound.",
-        icon: "🎧"
-      },
-      {
-        id: 15,
-        name: "Soundcore Liberty Air 2 Pro",
-        brand: "Anker",
-        category: "Audio",
-        price: 1.49,
-        stock: 60,
-        description: "Wireless earbuds with PureNote technology, customizable EQ, and multi-mode noise cancellation.",
-        icon: "🎧"
-      },
-      {
-        id: 16,
-        name: "iPad Pro",
-        brand: "Apple",
-        category: "Tablets",
-        price: 3.99,
-        stock: 30,
-        description: "Powerful tablet with M1 chip, Liquid Retina XDR display, and pro cameras with LiDAR Scanner.",
-        icon: "📱"
-      },
-      {
-        id: 17,
-        name: "iPad Air",
-        brand: "Apple",
-        category: "Tablets",
-        price: 2.99,
-        stock: 55,
-        description: "Thin, light, and powerful tablet with A14 Bionic chip and 10.9-inch Liquid Retina display.",
-        icon: "📱"
-      },
-      {
-        id: 18,
-        name: "Samsung Galaxy Tab S7+",
-        brand: "Samsung",
-        category: "Tablets",
-        price: 3.99,
-        stock: 25,
-        description: "Premium Android tablet with 12.4-inch Super AMOLED display and S Pen included.",
-        icon: "📱"
-      },
-      {
-        id: 19,
-        name: "Microsoft Surface Pro 8",
-        brand: "Microsoft",
-        category: "Tablets",
-        price: 4.99,
-        stock: 20,
-        description: "Versatile 2-in-1 device with 13-inch touchscreen, Thunderbolt 4, and Windows 11.",
-        icon: "📱"
-      },
-      {
-        id: 20,
-        name: "Lenovo Tab P11 Pro",
-        brand: "Lenovo",
-        category: "Tablets",
-        price: 2.99,
-        stock: 30,
-        description: "Premium Android tablet with 11.5-inch OLED display and quad JBL speakers.",
-        icon: "📱"
-      },
-      {
-        id: 21,
-        name: "Apple Watch Series 7",
-        brand: "Apple",
-        category: "Accessories",
-        price: 2.99,
-        stock: 60,
-        description: "Smartwatch with larger, always-on Retina display, faster charging, and enhanced durability.",
-        icon: "⌚"
-      },
-      {
-        id: 22,
-        name: "Samsung Galaxy Watch 4",
-        brand: "Samsung",
-        category: "Accessories",
-        price: 1.99,
-        stock: 40,
-        description: "Advanced health monitoring smartwatch with Wear OS powered by Samsung.",
-        icon: "⌚"
-      },
-      {
-        id: 23,
-        name: "Fitbit Charge 5",
-        brand: "Fitbit",
-        category: "Accessories",
-        price: 1.99,
-        stock: 70,
-        description: "Advanced fitness tracker with built-in GPS, stress management tools, and health metrics.",
-        icon: "⌚"
-      },
-      {
-        id: 24,
-        name: "MagSafe Charger",
-        brand: "Apple",
-        category: "Accessories",
-        price: 3.99,
-        stock: 85,
-        description: "Wireless charger that perfectly aligns with iPhone magnets for faster charging.",
-        icon: "🔌"
-      },
-      {
-        id: 25,
-        name: "Anker PowerCore",
-        brand: "Anker",
-        category: "Accessories",
-        price: 3.99,
-        stock: 100,
-        description: "Portable charger with high-capacity battery for multiple device charges on the go.",
-        icon: "🔋"
-      }
-    ];
-
-    let users = [
-      {
-        id: 1,
-        username: "admin",
-        password: "admin123", // In a real app, passwords would be hashed
-        email: "admin@example.com",
-        phone: "",
-        isAdmin: true,
-        restockLimit: 1000
-      },
-      {
-        id: 2,
-        username: "daniel",
-        password: "password123",
-        email: "daniel@example.com",
-        phone: "123-456-7890",
-        isAdmin: false
-      },
-      {
-        id: 3,
-        username: "Daniel Ramirez",
-        password: "juanpis2007",
-        email: "danielramirez@example.com",
-        phone: "555-123-4567",
-        isAdmin: true,
-        restockLimit: 1000
-      }
-    ];
-
-    let cartItems = [];
-
-    // ==================== SESSION HANDLING ====================
-
-    // Session Persistence Script
-    const SESSION_KEY = "denis_tech_store_session";
-    const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
-    let currentUser = null;
-
-    function saveSession(user) {
-      // Create a session object with user info and an expiration date
-      const session = {
-        userId: user.id,
-        username: user.username,
-        isAdmin: user.isAdmin || false,
-        expiresAt: Date.now() + SESSION_DURATION
-      };
-
-      // Save to localStorage
-      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    function addToCart(productName, price) {
+      cart.push({ name: productName, price });
+      updateCart();
     }
 
-    function getSession() {
-      const sessionStr = localStorage.getItem(SESSION_KEY);
-      if (!sessionStr) return null;
+    function updateCart() {
+      cartItemsElement.innerHTML = ''; // Clear previous items
+      let totalPrice = 0;
 
-      try {
-        const session = JSON.parse(sessionStr);
+      cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.textContent = `${item.name}: $${item.price} Depto`;
+        cartItemsElement.appendChild(itemElement);
+        totalPrice += item.price;
+      });
 
-        // Check if session has expired
-        if (Date.now() > session.expiresAt) {
-          localStorage.removeItem(SESSION_KEY);
-          return null;
-        }
-
-        return session;
-      } catch (error) {
-        console.error("Error parsing session:", error);
-        localStorage.removeItem(SESSION_KEY);
-        return null;
-      }
+      totalPriceElement.textContent = `Total: $${totalPrice} Depto`;
     }
 
-    function clearSession() {
-      localStorage.removeItem(SESSION_KEY);
-    }
-
-    function restoreUserSession() {
-      const session = getSession();
-      if (!session) return false;
-
-      // Find the user data based on session
-      const user = users.find(u => u.id === session.userId);
-      if (!user) {
-        clearSession();
-        return false;
-      }
-
-      // Set current user and update UI
-      currentUser = user;
-      updateUIForLoggedInUser();
-
-      // Get user's cart
-      loadUserCart();
-
-      return true;
-    }
-
-    // Theme Handling
-    const THEME_KEY = "denis_tech_store_theme";
-
-    function initializeTheme() {
-      // Check local storage for theme preference or default to dark
-      const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
-      setTheme(savedTheme);
-    }
-
-    function setTheme(theme) {
-      // Save to localStorage
-      localStorage.setItem(THEME_KEY, theme);
-
-      // Apply theme to document
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-        document.getElementById("theme-icon").className = "fas fa-sun";
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
       } else {
-        document.documentElement.classList.remove("dark");
-        document.getElementById("theme-icon").className = "fas fa-moon";
+        alert('Proceeding to checkout!');
       }
+    });
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Denis Tech Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Dark mode styles */
+    :root {
+      --background: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --primary-color: #3b82f6;
+      --primary-hover: #2563eb;
+    }
+    
+    .dark {
+      --background: #111827;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text-primary);
+      font-family: sans-serif;
     }
 
-    function toggleTheme() {
-      const currentTheme = localStorage.getItem(THEME_KEY) || "dark";
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-      setTheme(newTheme);
-      showToast("success", `${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)} mode activated`);
+    .header {
+      padding: 20px;
+      text-align: center;
     }
 
-    // ==================== UI FUNCTIONS ====================
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 20px;
+    }
 
-    function navigateTo(pageId) {
-      // Hide all pages
-      document.querySelectorAll("main > div").forEach(page => {
-        page.style.display = "none";
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .checkout {
+      margin: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Welcome to Denis Tech Store</h1>
+  </div>
+  
+  <div class="product-grid" id="product-grid">
+    <div class="card">
+      <h2>Product 1</h2>
+      <p>Price: $1 Depto</p>
+      <button class="btn-primary" onclick="addToCart('Product 1', 1)">Add to Cart</button>
+    </div>
+    
+    <div class="card">
+      <h2>Product 2</h2>
+      <p>Price: $3 Depto</p>
+      <button class="btn-primary" onclick="addToCart('Product 2', 3)">Add to Cart</button>
+    </div>
+    
+    <div class="card">
+      <h2>Product 3</h2>
+      <p>Price: $5 Depto</p>
+      <button class="btn-primary" onclick="addToCart('Product 3', 5)">Add to Cart</button>
+    </div>
+  </div>
+  
+  <div class="checkout">
+    <h2>Your Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <h3 id="total-price">Total: $0 Depto</h3>
+    <button class="btn-primary" id="checkout-btn">Checkout</button>
+  </div>
+
+  <script>
+    const cart = [];
+    const cartItemsElement = document.getElementById('cart-items');
+    const totalPriceElement = document.getElementById('total-price');
+
+    function addToCart(productName, price) {
+      cart.push({ name: productName, price });
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItemsElement.innerHTML = ''; // Clear previous items
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.textContent = `${item.name}: $${item.price} Depto`;
+        cartItemsElement.appendChild(itemElement);
+        totalPrice += item.price;
       });
 
-      // Show the selected page
-      document.getElementById(pageId).style.display = "block";
-
-      if (pageId === 'product-detail-page') {
-        // For demonstration, show the first product
-        showProductDetails(1);
-      }
-
-      // If going to the auth pages, make sure user is logged out
-      if (pageId === 'login-page' || pageId === 'register-page') {
-        // If user is already logged in, redirect to home page
-        if (currentUser) {
-          document.getElementById(pageId).style.display = "none";
-          document.getElementById("home-page").style.display = "block";
-          return;
-        }
-      }
-
-      // Update order summary on cart page
-      if (pageId === 'cart-page') {
-        updateOrderSummary();
-      }
+      totalPriceElement.textContent = `Total: $${totalPrice} Depto`;
     }
 
-    function updateUIForLoggedInUser() {
-      if (!currentUser) return;
-
-      // Update username display
-      document.getElementById("username-display").textContent = currentUser.username;
-
-      // Show nav menu, hide auth buttons
-      document.getElementById("nav-menu").classList.remove("hidden");
-      document.getElementById("auth-buttons").classList.add("hidden");
-
-      // Show admin panel if user is admin
-      if (currentUser.isAdmin) {
-        document.getElementById("admin-panel").classList.remove("hidden");
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
       } else {
-        document.getElementById("admin-panel").classList.add("hidden");
+        alert('Proceeding to checkout!');
       }
-
-      // Update profile form
-      document.getElementById("profile-username").value = currentUser.username;
-      document.getElementById("profile-email").value = currentUser.email || "";
-      document.getElementById("profile-phone").value = currentUser.phone || "";
-    }
-
-    function updateUIForLoggedOutUser() {
-      // Hide nav menu, show auth buttons
-      document.getElementById("nav-menu").classList.add("hidden");
-      document.getElementById("auth-buttons").classList.remove("hidden");
-
-      // Hide admin panel
-      document.getElementById("admin-panel").classList.add("hidden");
-
-      // Clear form fields
-      document.getElementById("profile-username").value = "";
-      document.getElementById("profile-email").value = "";
-      document.getElementById("profile-phone").value = "";
-    }
-
-    function renderProducts(filteredProducts = products) {
-      const container = document.getElementById("products-container");
-      container.innerHTML = "";
-
-      if (filteredProducts.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full text-center py-8">
-            <p class="text-gray-500 dark:text-gray-400">No products found matching your criteria.</p>
-          </div>
-        `;
-        return;
-      }
-
-      filteredProducts.forEach(product => {
-        const productCard = document.createElement("div");
-        productCard.className = "card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg";
-
-        productCard.innerHTML = `
-          <div class="p-4">
-            <div class="text-center text-5xl mb-4">${product.icon}</div>
-            <h3 class="font-bold text-lg mb-2">${product.name}</h3>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-gray-600 dark:text-gray-400">${product.brand}</span>
-              <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded">${product.category}</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-blue-600">$${product.price.toFixed(2)}</span>
-              <span class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">
-                ${product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
-              </span>
-            </div>
-          </div>
-          <div class="p-4 bg-gray-50 dark:bg-gray-700 flex space-x-2">
-            <button onclick="showProductDetails(${product.id})" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-sm">
-              View Details
-            </button>
-            <button onclick="quickAddToCart(${product.id})" class="w-10 h-10 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded flex items-center justify-center">
-              <i class="fas fa-cart-plus"></i>
-            </button>
-          </div>
-        `;
-
-        container.appendChild(productCard);
-      });
-    }
-
-    function showProductDetails(productId) {
-      const product = products.find(p => p.id === productId);
-      if (!product) return;
-
-      // Update product detail page with data
-      document.getElementById("product-detail-image").src = `https://via.placeholder.com/400?text=${encodeURIComponent(product.name)}`;
-      document.getElementById("product-detail-name").textContent = product.name;
-      document.getElementById("product-detail-brand").textContent = product.brand;
-      document.getElementById("product-detail-category").textContent = product.category;
-      document.getElementById("product-detail-price").textContent = `$${product.price.toFixed(2)}`;
-      document.getElementById("product-detail-stock").textContent = `${product.stock} in stock`;
-      document.getElementById("product-detail-description").textContent = product.description;
-
-      // Reset quantity
-      document.getElementById("product-quantity").value = 1;
-
-      // Store current product id in add to cart button
-      document.getElementById("add-to-cart-btn").setAttribute("data-product-id", productId);
-
-      // Show the product detail page
-      navigateTo("product-detail-page");
-    }
-
-    function filterProducts() {
-      const selectedCategory = document.getElementById("category-filter").value;
-      const selectedBrand = document.getElementById("brand-filter").value;
-      const searchTerm = document.getElementById("search-input").value.toLowerCase();
-
-      let filteredProducts = products;
-
-      // Apply category filter
-      if (selectedCategory) {
-        filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
-      }
-
-      // Apply brand filter
-      if (selectedBrand) {
-        filteredProducts = filteredProducts.filter(product => product.brand === selectedBrand);
-      }
-
-      // Apply search filter
-      if (searchTerm) {
-        filteredProducts = filteredProducts.filter(product => 
-          product.name.toLowerCase().includes(searchTerm) || 
-          product.description.toLowerCase().includes(searchTerm) ||
-          product.brand.toLowerCase().includes(searchTerm) ||
-          product.category.toLowerCase().includes(searchTerm)
-        );
-      }
-
-      renderProducts(filteredProducts);
-    }
-
-    function switchSettingsTab(tabName) {
-      // Update tab buttons
-      document.querySelectorAll('.settings-tab').forEach(tab => {
-        if (tab.dataset.tab === tabName) {
-          tab.classList.add('active-tab');
-          tab.classList.remove('text-gray-600', 'dark:text-gray-400', 'hover:text-gray-800', 'dark:hover:text-gray-200');
-        } else {
-          tab.classList.remove('active-tab');
-          tab.classList.add('text-gray-600', 'dark:text-gray-400', 'hover:text-gray-800', 'dark:hover:text-gray-200');
-        }
-      });
-
-      // Show selected tab content, hide others
-      document.querySelectorAll('.settings-content').forEach(content => {
-        content.classList.add('hidden');
-      });
-      document.getElementById(`${tabName}-settings`).classList.remove('hidden');
-    }
-
-    function showToast(type, message) {
-      const toast = document.getElementById("toast");
-      const toastIcon = document.getElementById("toast-icon");
-      const toastMessage = document.getElementById("toast-message");
-
-      // Set icon based on type
-      if (type === "success") {
-        toastIcon.innerHTML = '<i class="fas fa-check-circle text-green-500 text-lg"></i>';
-      } else if (type === "error") {
-        toastIcon.innerHTML = '<i class="fas fa-exclamation-circle text-red-500 text-lg"></i>';
-      } else if (type === "info") {
-        toastIcon.innerHTML = '<i class="fas fa-info-circle text-blue-500 text-lg"></i>';
-      }
-
-      // Set message
-      toastMessage.textContent = message;
-
-      // Show toast
-      toast.classList.remove("hidden");
-
-      // Hide toast after 3 seconds
-      setTimeout(hideToast, 3000);
-    }
-
-    function hideToast() {
-      document.getElementById("toast").classList.add("hidden");
-    }
-
-    // ==================== CART FUNCTIONS ====================
-
-    // Constants for cart storage
-    const CART_STORAGE_KEY = "denis_tech_store_cart";
-
-    function saveCart() {
-      if (!currentUser) return;
-
-      // Save cart items to localStorage with user ID to keep carts separate
-      const storageKey = `${CART_STORAGE_KEY}_${currentUser.id}`;
-      localStorage.setItem(storageKey, JSON.stringify(cartItems));
-    }
-
-    function loadUserCart() {
-      if (!currentUser) {
-        cartItems = [];
-        updateCartUI();
-        return;
-      }
-
-      // Try to load cart from localStorage
-      const storageKey = `${CART_STORAGE_KEY}_${currentUser.id}`;
-      const savedCart = localStorage.getItem(storageKey);
-
-      if (savedCart) {
-        try {
-          cartItems = JSON.parse(savedCart);
-        } catch (error) {
-          console.error("Error loading cart from localStorage:", error);
-          cartItems = [];
-        }
-      } else {
-        cartItems = [];
-      }
-
-      updateCartUI();
-    }
-
-    function addToCart(productId, quantity) {
-      // Check if user is logged in
-      if (!currentUser) {
-        showToast("error", "Please login to add items to your cart");
-        navigateTo("login-page");
-        return;
-      }
-
-      const product = products.find(p => p.id === productId);
-      if (!product) return;
-
-      // Check if product is in stock
-      if (product.stock <= 0) {
-        showToast("error", "Sorry, this product is out of stock");
-        return;
-      }
-
-      // Check if quantity is valid
-      if (quantity <= 0) {
-        showToast("error", "Please select a valid quantity");
-        return;
-      }
-
-      // Check if quantity is available
-      if (quantity > product.stock) {
-        showToast("error", `Only ${product.stock} units available`);
-        return;
-      }
-
-      // Check if product is already in cart
-      const existingCartItem = cartItems.find(item => item.productId === productId);
-
-      if (existingCartItem) {
-        // Update quantity
-        existingCartItem.quantity += quantity;
-        showToast("success", `Updated quantity for ${product.name}`);
-      } else {
-        // Add new item
-        cartItems.push({
-          id: Date.now(),
-          productId,
-          userId: currentUser.id,
-          quantity,
-          product // For easy access to product data
-        });
-        showToast("success", `Added ${product.name} to cart`);
-      }
-
-      updateCartUI();
-    }
-
-    function quickAddToCart(productId) {
-      addToCart(productId, 1);
-    }
-
-    function updateCartItem(cartItemId, quantity) {
-      const cartItem = cartItems.find(item => item.id === cartItemId);
-      if (!cartItem) return;
-
-      const product = products.find(p => p.id === cartItem.productId);
-      if (!product) return;
-
-      // Check if quantity is valid
-      if (quantity <= 0) {
-        // Remove item if quantity is 0 or less
-        removeFromCart(cartItemId);
-        return;
-      }
-
-      // Check if quantity is available
-      if (quantity > product.stock) {
-        showToast("error", `Only ${product.stock} units available`);
-        return;
-      }
-
-      // Update quantity
-      cartItem.quantity = quantity;
-      updateCartUI();
-      showToast("success", `Updated quantity for ${product.name}`);
-    }
-
-    function removeFromCart(cartItemId) {
-      const cartItem = cartItems.find(item => item.id === cartItemId);
-      if (!cartItem) return;
-
-      const product = products.find(p => p.id === cartItem.productId);
-
-      // Remove the item from the cart
-      cartItems = cartItems.filter(item => item.id !== cartItemId);
-
-      updateCartUI();
-      showToast("info", `Removed ${product ? product.name : 'item'} from cart`);
-    }
-
-    function clearCart() {
-      cartItems = [];
-      updateCartUI();
-      showToast("info", "Your cart has been cleared");
-    }
-
-    function updateCartUI() {
-      // Save cart to localStorage whenever the cart is updated
-      if (currentUser) {
-        saveCart();
-      }
-
-      // Update cart count
-      document.getElementById("cart-count").textContent = cartItems.length;
-
-      // Update cart page
-      const cartItemsContainer = document.getElementById("cart-items-container");
-      const emptyCartMessage = document.getElementById("empty-cart-message");
-      const orderSummary = document.getElementById("order-summary");
-
-      if (cartItems.length === 0) {
-        // Show empty cart message, hide order summary
-        emptyCartMessage.classList.remove("hidden");
-        orderSummary.classList.add("hidden");
-        cartItemsContainer.innerHTML = '';
-        return;
-      }
-
-      // Hide empty cart message, show order summary
-      emptyCartMessage.classList.add("hidden");
-      orderSummary.classList.remove("hidden");
-
-      // Render cart items
-      cartItemsContainer.innerHTML = '';
-
-      cartItems.forEach(item => {
-        const product = products.find(p => p.id === item.productId);
-        if (!product) return;
-
-        const cartItemElement = document.createElement("div");
-        cartItemElement.className = "p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4";
-
-        cartItemElement.innerHTML = `
-          <div class="w-16 h-16 flex-shrink-0 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center">
-            <span class="text-2xl">${product.icon}</span>
-          </div>
-
-          <div class="flex-grow">
-            <h3 class="font-medium">${product.name}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">${product.brand} - ${product.category}</p>
-            <p class="font-bold text-blue-600 mt-1">$${product.price.toFixed(2)}</p>
-          </div>
-
-          <div class="flex flex-col sm:flex-row items-center gap-3">
-            <div class="quantity-selector border border-gray-300 dark:border-gray-600 rounded-md">
-              <button onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})" class="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md">-</button>
-              <input type="number" min="1" value="${item.quantity}" class="form-input w-12 text-center border-0 focus:ring-0" 
-                onchange="updateCartQuantity(${item.id}, parseInt(this.value))">
-              <button onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})" class="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md">+</button>
-            </div>
-
-            <button onclick="removeFromCart(${item.id})" class="text-red-600 hover:text-red-800">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        `;
-
-        cartItemsContainer.appendChild(cartItemElement);
-      });
-
-      updateOrderSummary();
-    }
-
-    function updateCartQuantity(cartItemId, newQuantity) {
-      updateCartItem(cartItemId, newQuantity);
-    }
-
-    async function handleCheckout() {
-      if (!currentUser) {
-        showToast("error", "Please login to checkout");
-        navigateTo("login-page");
-        return;
-      }
-
-      if (cartItems.length === 0) {
-        showToast("error", "Your cart is empty");
-        return;
-      }
-
-      try {
-        // Process checkout
-        cartItems.forEach(item => {
-          const product = products.find(p => p.id === item.productId);
-          if (product) {
-            product.stock -= item.quantity;
-          }
-        });
-
-        // Clear cart after successful checkout
-        clearCart();
-        showToast("success", "Checkout completed successfully");
-        navigateTo("home-page");
-      } catch (error) {
-        showToast("error", "Failed to complete checkout");
-      }
-    }
-
-    function updateOrderSummary() {
-      if (cartItems.length === 0) return;
-
-      let subtotal = 0;
-      cartItems.forEach(item => {
-        const product = products.find(p => p.id === item.productId);
-        if (product) {
-          subtotal += product.price * item.quantity;
-        }
-      });
-
-      const tax = subtotal * 0.08; // 8% tax
-      const total = subtotal + tax;
-
-      document.getElementById("cart-subtotal").textContent = `$${subtotal.toFixed(2)}`;
-      document.getElementById("cart-tax").textContent = `$${tax.toFixed(2)}`;
-      document.getElementById("cart-total").textContent = `$${total.toFixed(2)}`;
-    }
-
-    // ==================== AUTH FUNCTIONS ====================
-
-    function login(username, password) {
-      // Find user
-      const user = users.find(u => u.username === username && u.password === password);
-
-      if (!user) {
-        return { success: false, message: "Invalid username or password" };
-      }
-
-      // Set current user
-      currentUser = user;
-
-      // Save session for persistence
-      saveSession(user);
-
-      // Update UI
-      updateUIForLoggedInUser();
-
-      // Load user's cart
-      loadUserCart();
-
-      return { success: true };
-    }
-
-    function register(username, email, password) {
-      // Check if username already exists
-      if (users.find(u => u.username === username)) {
-        return { success: false, message: "Username already exists" };
-      }
-
-      // Create new user
-      const newUser = {
-        id: users.length + 1,
-        username,
-        password,
-        email: email || null,
-        phone: null,
-        isAdmin: false
-      };
-
-      // Add to users array
-      users.push(newUser);
-
-      // Log in the new user
-      currentUser = newUser;
-
-      // Save session for persistence
-      saveSession(newUser);
-
-      // Update UI
-      updateUIForLoggedInUser();
-
-      return { success: true };
-    }
-
-    function logout() {
-      // Clear current user
-      currentUser = null;
-
-      // Clear session
-      clearSession();
-
-      // Clear cart
-      cartItems = [];
-
-      // Update UI
-      updateUIForLoggedOutUser();
-
-      // Navigate to home page
-      navigateTo("home-page");
-
-      showToast("info", "You have been logged out");
-    }
-
-    function updateProfile(data) {
-      if (!currentUser) return { success: false, message: "You must be logged in" };
-
-      // Update current user data
-      if (data.username) currentUser.username = data.username;
-      if (data.email !== undefined) currentUser.email = data.email;
-      if (data.phone !== undefined) currentUser.phone = data.phone;
-
-      // Update the user in the users array
-      const userIndex = users.findIndex(u => u.id === currentUser.id);
-      if (userIndex !== -1) {
-        users[userIndex] = currentUser;
-      }
-
-      // Update UI
-      updateUIForLoggedInUser();
-
-      return { success: true, message: "Profile updated successfully" };
-    }
-
-    function changePassword(currentPassword, newPassword) {
-      if (!currentUser) return { success: false, message: "You must be logged in" };
-
-      // Verify current password
-      if (currentUser.password !== currentPassword) {
-        return { success: false, message: "Current password is incorrect" };
-      }
-
-      // Update password
-      currentUser.password = newPassword;
-
-      // Update the user in the users array
-      const userIndex = users.findIndex(u => u.id === currentUser.id);
-      if (userIndex !== -1) {
-        users[userIndex] = currentUser;
-      }
-
-      return { success: true, message: "Password changed successfully" };
-    }
-
-    // ==================== ADMIN FUNCTIONS ====================
-
-    function restockProduct(productId, amount) {
-      if (!currentUser || !currentUser.isAdmin) {
-        showToast("error", "You must be an admin to restock products");
-        return;
-      }
-
-      const product = products.find(p => p.id === productId);
-      if (!product) return;
-
-      // Set a hard limit of 1000 units for total stock
-      const MAX_STOCK = 1000;
-
-      // Check if amount is valid
-      if (amount <= 0) {
-        showToast("error", "Please enter a valid amount");
-        return;
-      }
-
-      // Check if amount exceeds restock limit - set to 1,000 units
-      if (amount > MAX_STOCK) {
-        showToast("error", `You can only restock up to ${MAX_STOCK} units at a time`);
-        return;
-      }
-
-      // Check if total stock would exceed MAX_STOCK units
-      if (product.stock + amount > MAX_STOCK) {
-        showToast("error", `Total stock cannot exceed ${MAX_STOCK} units. Current stock: ${product.stock}. You can add at most ${MAX_STOCK - product.stock} more units.`);
-        return;
-      }
-
-      // Update stock
-      product.stock += amount;
-
-      // Update UI
-      document.getElementById("product-detail-stock").textContent = `${product.stock} in stock`;
-
-      showToast("success", `Restocked ${amount} units of ${product.name}`);
-    }
-
-    // ==================== EVENT LISTENERS ====================
-
-    // Initialize app on load
-    window.onload = function() {
-      // Initialize theme
-      initializeTheme();
-
-      // Try to restore user session
-      const sessionRestored = restoreUserSession();
-
-      // If session not restored, show login form
-      if (!sessionRestored) {
-        updateUIForLoggedOutUser();
-      }
-
-      // Render products
-      renderProducts();
-
-      // Navigate to home page by default
-      navigateTo("home-page");
-
-      // Register form event listeners
-
-      // Login form
-      document.getElementById("login-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const username = document.getElementById("login-username").value;
-        const password = document.getElementById("login-password").value;
-
-        const result = login(username, password);
-
-        if (result.success) {
-          showToast("success", "Logged in successfully");
-          navigateTo("home-page");
-        } else {
-          showToast("error", result.message);
-        }
-      });
-
-      // Register form
-      document.getElementById("register-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const username = document.getElementById("register-username").value;
-        const email = document.getElementById("register-email").value;
-        const password = document.getElementById("register-password").value;
-        const confirmPassword = document.getElementById("register-confirm-password").value;
-
-        // Validate passwords match
-        if (password !== confirmPassword) {
-          showToast("error", "Passwords do not match");
-          return;
-        }
-
-        const result = register(username, email, password);
-
-        if (result.success) {
-          showToast("success", "Account created successfully");
-          navigateTo("home-page");
-        } else {
-          showToast("error", result.message);
-        }
-      });
-
-      // Profile form
-      document.getElementById("profile-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const username = document.getElementById("profile-username").value;
-        const email = document.getElementById("profile-email").value;
-        const phone = document.getElementById("profile-phone").value;
-
-        const result = updateProfile({ username, email, phone });
-
-        if (result.success) {
-          showToast("success", result.message);
-        } else {
-          showToast("error", result.message);
-        }
-      });
-
-      // Password form
-      document.getElementById("password-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const currentPassword = document.getElementById("current-password").value;
-        const newPassword = document.getElementById("new-password").value;
-        const confirmPassword = document.getElementById("confirm-password").value;
-
-        // Validate passwords match
-        if (newPassword !== confirmPassword) {
-          showToast("error", "New passwords do not match");
-          return;
-        }
-
-        const result = changePassword(currentPassword, newPassword);
-
-        if (result.success) {
-          showToast("success", result.message);
-
-          // Clear form
-          document.getElementById("current-password").value = "";
-          document.getElementById("new-password").value = "";
-          document.getElementById("confirm-password").value = "";
-        } else {
-          showToast("error", result.message);
-        }
-      });
-
-      // Theme toggle
-      document.getElementById("theme-toggle").addEventListener("click", function() {
-        toggleTheme();
-      });
-
-      // Category and brand filters
-      document.getElementById("category-filter").addEventListener("change", filterProducts);
-      document.getElementById("brand-filter").addEventListener("change", filterProducts);
-
-      // Search input
-      document.getElementById("search-input").addEventListener("input", filterProducts);
-
-      // Product quantity selector
-      document.getElementById("decrease-quantity").addEventListener("click", function() {
-        const quantityInput = document.getElementById("product-quantity");
-        if (parseInt(quantityInput.value) > 1) {
-          quantityInput.value = parseInt(quantityInput.value) - 1;
-        }
-      });
-
-      document.getElementById("increase-quantity").addEventListener("click", function() {
-        document.getElementById("product-quantity").value = parseInt(document.getElementById("product-quantity").value) + 1;
-      });
-
-      // Add to cart button
-      document.getElementById("add-to-cart-btn").addEventListener("click", function() {
-        const productId = parseInt(this.getAttribute("data-product-id"));
-        const quantity = parseInt(document.getElementById("product-quantity").value);
-        addToCart(productId, quantity);
-      });
-
-      // Restock button
-      document.getElementById("restock-btn").addEventListener("click", function() {
-        const productId = parseInt(document.getElementById("add-to-cart-btn").getAttribute("data-product-id"));
-        const amount = parseInt(document.getElementById("restock-amount").value);
-        restockProduct(productId, amount);
-      });
-    };
+    });
   </script>
 </body>
 </html>
