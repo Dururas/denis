@@ -421,7 +421,7 @@
               </div>
             </div>
             
-            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition">
+            <button onclick="handleCheckout()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition" id="checkout-button">
               Proceed to Checkout
             </button>
           </div>
@@ -643,7 +643,7 @@
         name: "iPhone 13 Pro",
         brand: "Apple",
         category: "Smartphones",
-        price: 999.99,
+        price: 14.99,
         stock: 50,
         description: "The latest iPhone with Pro camera system, A15 Bionic chip, and Super Retina XDR display with ProMotion.",
         icon: "📱"
@@ -653,7 +653,7 @@
         name: "Samsung Galaxy S21",
         brand: "Samsung",
         category: "Smartphones",
-        price: 799.99,
+        price: 13.99,
         stock: 65,
         description: "Flagship smartphone with 8K video, Dynamic AMOLED display, and powerful performance.",
         icon: "📱"
@@ -663,7 +663,7 @@
         name: "Pixel 6 Pro",
         brand: "Google",
         category: "Smartphones",
-        price: 899.99,
+        price: 14.49,
         stock: 40,
         description: "Google's flagship phone with an advanced camera system, Google Tensor chip, and stunning display.",
         icon: "📱"
@@ -673,7 +673,7 @@
         name: "iPhone 13",
         brand: "Apple",
         category: "Smartphones",
-        price: 799.99,
+        price: 13.99,
         stock: 75,
         description: "Featuring a bright Super Retina XDR display, Ceramic Shield, and A15 Bionic chip.",
         icon: "📱"
@@ -683,7 +683,7 @@
         name: "OnePlus 9 Pro",
         brand: "OnePlus",
         category: "Smartphones",
-        price: 699.99,
+        price: 12.99,
         stock: 35,
         description: "Flagship smartphone with Hasselblad camera, fluid display, and fast charging.",
         icon: "📱"
@@ -693,7 +693,7 @@
         name: "MacBook Pro 16",
         brand: "Apple",
         category: "Laptops",
-        price: 2399.99,
+        price: 14.99,
         stock: 25,
         description: "Powerful laptop with M1 Pro or M1 Max chip, stunning Liquid Retina XDR display, and up to 21 hours of battery life.",
         icon: "💻"
@@ -703,7 +703,7 @@
         name: "Dell XPS 15",
         brand: "Dell",
         category: "Laptops",
-        price: 1799.99,
+        price: 14.79,
         stock: 30,
         description: "Premium laptop with InfinityEdge display, 11th Gen Intel processors, and stunning design.",
         icon: "💻"
@@ -713,7 +713,7 @@
         name: "HP Spectre x360",
         brand: "HP",
         category: "Laptops",
-        price: 1299.99,
+        price: 14.89,
         stock: 20,
         description: "Convertible laptop with 4K OLED display, Intel Evo platform, and gem-cut design.",
         icon: "💻"
@@ -723,7 +723,7 @@
         name: "Lenovo ThinkPad X1 Carbon",
         brand: "Lenovo",
         category: "Laptops",
-        price: 1499.99,
+        price: 14.99,
         stock: 15,
         description: "Ultra-lightweight business laptop with all-day battery life and enhanced security features.",
         icon: "💻"
@@ -733,7 +733,7 @@
         name: "MacBook Air",
         brand: "Apple",
         category: "Laptops",
-        price: 999.99,
+        price: 14.99,
         stock: 45,
         description: "Thin and light laptop with M1 chip, silent fanless design, and up to 18 hours of battery life.",
         icon: "💻"
@@ -743,7 +743,7 @@
         name: "AirPods Pro",
         brand: "Apple",
         category: "Audio",
-        price: 249.99,
+        price: 7.99,
         stock: 100,
         description: "Wireless earbuds featuring active noise cancellation, transparency mode, and adaptive EQ.",
         icon: "🎧"
@@ -753,7 +753,7 @@
         name: "Sony WH-1000XM4",
         brand: "Sony",
         category: "Audio",
-        price: 349.99,
+        price: 8.99,
         stock: 40,
         description: "Industry-leading noise cancelling wireless headphones with exceptional sound quality.",
         icon: "🎧"
@@ -763,7 +763,7 @@
         name: "Bose QuietComfort Earbuds",
         brand: "Bose",
         category: "Audio",
-        price: 279.99,
+        price: 8.49,
         stock: 35,
         description: "Noise cancelling earbuds with clear sound and deep bass.",
         icon: "🎧"
@@ -773,7 +773,7 @@
         name: "Samsung Galaxy Buds Pro",
         brand: "Samsung",
         category: "Audio",
-        price: 199.99,
+        price: 6.99,
         stock: 50,
         description: "True wireless earbuds with intelligent active noise cancellation and immersive sound.",
         icon: "🎧"
@@ -783,7 +783,7 @@
         name: "Soundcore Liberty Air 2 Pro",
         brand: "Anker",
         category: "Audio",
-        price: 129.99,
+        price: 6.49,
         stock: 60,
         description: "Wireless earbuds with PureNote technology, customizable EQ, and multi-mode noise cancellation.",
         icon: "🎧"
@@ -793,7 +793,7 @@
         name: "iPad Pro",
         brand: "Apple",
         category: "Tablets",
-        price: 799.99,
+        price: 13.99,
         stock: 30,
         description: "Powerful tablet with M1 chip, Liquid Retina XDR display, and pro cameras with LiDAR Scanner.",
         icon: "📱"
@@ -803,7 +803,7 @@
         name: "iPad Air",
         brand: "Apple",
         category: "Tablets",
-        price: 599.99,
+        price: 10.99,
         stock: 55,
         description: "Thin, light, and powerful tablet with A14 Bionic chip and 10.9-inch Liquid Retina display.",
         icon: "📱"
@@ -813,7 +813,7 @@
         name: "Samsung Galaxy Tab S7+",
         brand: "Samsung",
         category: "Tablets",
-        price: 849.99,
+        price: 13.99,
         stock: 25,
         description: "Premium Android tablet with 12.4-inch Super AMOLED display and S Pen included.",
         icon: "📱"
@@ -823,7 +823,7 @@
         name: "Microsoft Surface Pro 8",
         brand: "Microsoft",
         category: "Tablets",
-        price: 999.99,
+        price: 14.99,
         stock: 20,
         description: "Versatile 2-in-1 device with 13-inch touchscreen, Thunderbolt 4, and Windows 11.",
         icon: "📱"
@@ -833,7 +833,7 @@
         name: "Lenovo Tab P11 Pro",
         brand: "Lenovo",
         category: "Tablets",
-        price: 499.99,
+        price: 9.99,
         stock: 30,
         description: "Premium Android tablet with 11.5-inch OLED display and quad JBL speakers.",
         icon: "📱"
@@ -843,7 +843,7 @@
         name: "Apple Watch Series 7",
         brand: "Apple",
         category: "Accessories",
-        price: 399.99,
+        price: 8.99,
         stock: 60,
         description: "Smartwatch with larger, always-on Retina display, faster charging, and enhanced durability.",
         icon: "⌚"
@@ -853,7 +853,7 @@
         name: "Samsung Galaxy Watch 4",
         brand: "Samsung",
         category: "Accessories",
-        price: 249.99,
+        price: 7.99,
         stock: 40,
         description: "Advanced health monitoring smartwatch with Wear OS powered by Samsung.",
         icon: "⌚"
@@ -863,7 +863,7 @@
         name: "Fitbit Charge 5",
         brand: "Fitbit",
         category: "Accessories",
-        price: 179.99,
+        price: 6.99,
         stock: 70,
         description: "Advanced fitness tracker with built-in GPS, stress management tools, and health metrics.",
         icon: "⌚"
@@ -873,7 +873,7 @@
         name: "MagSafe Charger",
         brand: "Apple",
         category: "Accessories",
-        price: 39.99,
+        price: 9.99,
         stock: 85,
         description: "Wireless charger that perfectly aligns with iPhone magnets for faster charging.",
         icon: "🔌"
@@ -883,7 +883,7 @@
         name: "Anker PowerCore",
         brand: "Anker",
         category: "Accessories",
-        price: 49.99,
+        price: 12.99,
         stock: 100,
         description: "Portable charger with high-capacity battery for multiple device charges on the go.",
         icon: "🔋"
@@ -1234,6 +1234,17 @@
     
     // ==================== CART FUNCTIONS ====================
     
+    // Constants for cart storage
+    const CART_STORAGE_KEY = "denis_tech_store_cart";
+    
+    function saveCart() {
+      if (!currentUser) return;
+      
+      // Save cart items to localStorage with user ID to keep carts separate
+      const storageKey = `${CART_STORAGE_KEY}_${currentUser.id}`;
+      localStorage.setItem(storageKey, JSON.stringify(cartItems));
+    }
+    
     function loadUserCart() {
       if (!currentUser) {
         cartItems = [];
@@ -1241,8 +1252,21 @@
         return;
       }
       
-      // In a real app, this would load cart items from an API
-      // For this example, we'll just use the cartItems array
+      // Try to load cart from localStorage
+      const storageKey = `${CART_STORAGE_KEY}_${currentUser.id}`;
+      const savedCart = localStorage.getItem(storageKey);
+      
+      if (savedCart) {
+        try {
+          cartItems = JSON.parse(savedCart);
+        } catch (error) {
+          console.error("Error loading cart from localStorage:", error);
+          cartItems = [];
+        }
+      } else {
+        cartItems = [];
+      }
+      
       updateCartUI();
     }
     
@@ -1347,6 +1371,11 @@
     }
     
     function updateCartUI() {
+      // Save cart to localStorage whenever the cart is updated
+      if (currentUser) {
+        saveCart();
+      }
+      
       // Update cart count
       document.getElementById("cart-count").textContent = cartItems.length;
       
@@ -1412,6 +1441,36 @@
       updateCartItem(cartItemId, newQuantity);
     }
     
+    async function handleCheckout() {
+      if (!currentUser) {
+        showToast("error", "Please login to checkout");
+        navigateTo("login-page");
+        return;
+      }
+
+      if (cartItems.length === 0) {
+        showToast("error", "Your cart is empty");
+        return;
+      }
+
+      try {
+        // Process checkout
+        cartItems.forEach(item => {
+          const product = products.find(p => p.id === item.productId);
+          if (product) {
+            product.stock -= item.quantity;
+          }
+        });
+
+        // Clear cart after successful checkout
+        clearCart();
+        showToast("success", "Checkout completed successfully");
+        navigateTo("home-page");
+      } catch (error) {
+        showToast("error", "Failed to complete checkout");
+      }
+    }
+
     function updateOrderSummary() {
       if (cartItems.length === 0) return;
       
