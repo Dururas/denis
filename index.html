@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Denis Tech Store</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Dark mode styles */
@@ -104,7 +102,6 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="header shadow-sm sticky top-0 z-50 border-b">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center cursor-pointer" onclick="navigateTo('home-page')">
@@ -112,7 +109,6 @@
         <span class="ml-2 font-semibold text-gray-700 dark:text-gray-300 hidden sm:inline">Tech Store</span>
       </div>
 
-      <!-- Navigation Menu - Only visible when logged in -->
       <div id="nav-menu" class="hidden">
         <div class="flex items-center space-x-4">
           <button onclick="navigateTo('cart-page')" class="relative">
@@ -139,7 +135,6 @@
         </div>
       </div>
 
-      <!-- Login/Register buttons - Only visible when logged out -->
       <div id="auth-buttons" class="flex space-x-2">
         <button onclick="navigateTo('login-page')" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900 transition">Login</button>
         <button onclick="navigateTo('register-page')" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Register</button>
@@ -147,13 +142,10 @@
     </div>
   </header>
 
-  <!-- Main Content Area -->
   <main class="container mx-auto px-4 py-8">
-    <!-- Home Page / Products List -->
     <div id="home-page">
       <h1 class="text-2xl font-bold mb-6">Featured Products</h1>
 
-      <!-- Filters Row -->
       <div class="mb-6 flex flex-col sm:flex-row justify-between items-start gap-4">
         <div class="flex flex-wrap gap-2">
           <select id="category-filter" class="form-input px-4 py-2 rounded-md border focus:ring-blue-500 focus:border-blue-500">
@@ -180,11 +172,9 @@
         </div>
       </div>
 
-      <!-- Products Grid -->
       <div id="products-container" class="product-grid"></div>
     </div>
 
-    <!-- Login Page -->
     <div id="login-page" class="flex min-h-[80vh]">
       <div class="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -275,7 +265,6 @@
       </div>
     </div>
 
-    <!-- Register Page -->
     <div id="register-page" class="flex min-h-[80vh]">
       <div class="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -371,7 +360,6 @@
       </div>
     </div>
 
-    <!-- Cart Page -->
     <div id="cart-page">
       <div class="max-w-5xl mx-auto">
         <div class="flex justify-between items-center mb-6">
@@ -384,7 +372,6 @@
 
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
           <div id="cart-items-container" class="divide-y divide-gray-200 dark:divide-gray-700">
-            <!-- Cart items will be added here dynamically -->
             <div class="p-8 text-center text-gray-500 dark:text-gray-400" id="empty-cart-message">
               <i class="fas fa-shopping-cart text-5xl mb-4"></i>
               <p class="text-xl">Your cart is empty</p>
@@ -396,7 +383,6 @@
           </div>
         </div>
 
-        <!-- Order Summary -->
         <div id="order-summary" class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
           <div class="p-6">
             <h2 class="text-lg font-semibold mb-4">Order Summary</h2>
@@ -429,7 +415,6 @@
       </div>
     </div>
 
-    <!-- Product Detail Page -->
     <div id="product-detail-page">
       <div class="max-w-6xl mx-auto">
         <button onclick="navigateTo('home-page')" class="flex items-center text-blue-600 hover:text-blue-800 mb-6">
@@ -439,12 +424,10 @@
 
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
           <div class="md:flex">
-            <!-- Product Image -->
             <div class="md:w-1/2 p-6 flex items-center justify-center">
               <img id="product-detail-image" src="" alt="Product" class="max-w-full h-auto max-h-96 object-contain">
             </div>
 
-            <!-- Product Info -->
             <div class="md:w-1/2 p-6 md:border-l border-gray-200 dark:border-gray-700">
               <div class="flex justify-between items-start">
                 <div>
@@ -462,7 +445,6 @@
 
               <p id="product-detail-description" class="text-gray-700 dark:text-gray-300 my-6"></p>
 
-              <!-- Quantity selector and Add to Cart -->
               <div class="mt-8">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quantity</label>
                 <div class="flex items-center">
@@ -478,7 +460,6 @@
                 </div>
               </div>
 
-              <!-- Admin Restock Panel (only visible for admin users) -->
               <div id="admin-panel" class="mt-8 p-4 border border-gray-300 dark:border-gray-600 rounded-md hidden">
                 <h3 class="font-semibold mb-2">Admin Panel - Restock Product</h3>
                 <div class="flex items-center">
@@ -494,7 +475,6 @@
       </div>
     </div>
 
-    <!-- Settings Page -->
     <div id="settings-page">
       <div class="max-w-2xl mx-auto">
         <div class="flex justify-between items-center mb-6">
@@ -505,7 +485,6 @@
           </button>
         </div>
 
-        <!-- Settings Tabs -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
           <div class="flex border-b border-gray-200 dark:border-gray-700">
             <button 
@@ -531,7 +510,6 @@
             </button>
           </div>
 
-          <!-- Profile Settings -->
           <div id="profile-settings" class="settings-content p-6">
             <div class="flex flex-col sm:flex-row gap-6 mb-6">
               <div class="sm:w-1/3 flex flex-col items-center">
@@ -566,7 +544,6 @@
             </div>
           </div>
 
-          <!-- Security Settings -->
           <div id="security-settings" class="settings-content p-6 hidden">
             <h2 class="text-xl font-semibold mb-4">Change Password</h2>
             <div class="max-w-md mx-auto">
@@ -593,7 +570,6 @@
             </div>
           </div>
 
-          <!-- Preferences Settings -->
           <div id="preferences-settings" class="settings-content p-6 hidden">
             <h2 class="text-xl font-semibold mb-4">Preferences</h2>
             <div class="space-y-6">
@@ -613,7 +589,6 @@
     </div>
   </main>
 
-  <!-- Toast Notification -->
   <div id="toast" class="fixed top-4 right-4 max-w-xs bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto hidden overflow-hidden z-50">
     <div class="p-4">
       <div class="flex items-start">
@@ -632,7 +607,6 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script>
     // ==================== DATA STORE ====================
 
@@ -1303,17 +1277,21 @@
       const existingCartItem = cartItems.find(item => item.productId === productId);
 
       if (existingCartItem) {
-        // Update quantity
+        // Check if adding more would exceed stock
+        if (existingCartItem.quantity + quantity > product.stock) {
+          showToast("error", `Cannot add more. Only ${product.stock} units total available.`);
+          return;
+        }
         existingCartItem.quantity += quantity;
         showToast("success", `Updated quantity for ${product.name}`);
       } else {
         // Add new item
         cartItems.push({
-          id: Date.now(),
+          id: Date.now(), // Unique ID for cart item
           productId,
           userId: currentUser.id,
           quantity,
-          product // For easy access to product data
+          product // For easy access to product data (consider only storing productId in real app to avoid stale data)
         });
         showToast("success", `Added ${product.name} to cart`);
       }
@@ -1342,6 +1320,9 @@
       // Check if quantity is available
       if (quantity > product.stock) {
         showToast("error", `Only ${product.stock} units available`);
+        // Optionally, set quantity to max available if user tries to set too high
+        cartItem.quantity = product.stock;
+        updateCartUI(); // Update UI to reflect the clamped quantity
         return;
       }
 
@@ -1370,77 +1351,6 @@
       showToast("info", "Your cart has been cleared");
     }
 
-    function updateCartUI() {
-      // Save cart to localStorage whenever the cart is updated
-      if (currentUser) {
-        saveCart();
-      }
-
-      // Update cart count
-      document.getElementById("cart-count").textContent = cartItems.length;
-
-      // Update cart page
-      const cartItemsContainer = document.getElementById("cart-items-container");
-      const emptyCartMessage = document.getElementById("empty-cart-message");
-      const orderSummary = document.getElementById("order-summary");
-
-      if (cartItems.length === 0) {
-        // Show empty cart message, hide order summary
-        emptyCartMessage.classList.remove("hidden");
-        orderSummary.classList.add("hidden");
-        cartItemsContainer.innerHTML = '';
-        return;
-      }
-
-      // Hide empty cart message, show order summary
-      emptyCartMessage.classList.add("hidden");
-      orderSummary.classList.remove("hidden");
-
-      // Render cart items
-      cartItemsContainer.innerHTML = '';
-
-      cartItems.forEach(item => {
-        const product = products.find(p => p.id === item.productId);
-        if (!product) return;
-
-        const cartItemElement = document.createElement("div");
-        cartItemElement.className = "p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4";
-
-        cartItemElement.innerHTML = `
-          <div class="w-16 h-16 flex-shrink-0 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center">
-            <span class="text-2xl">${product.icon}</span>
-          </div>
-
-          <div class="flex-grow">
-            <h3 class="font-medium">${product.name}</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400">${product.brand} - ${product.category}</p>
-            <p class="font-bold text-blue-600 mt-1">$${product.price.toFixed(2)}</p>
-          </div>
-
-          <div class="flex flex-col sm:flex-row items-center gap-3">
-            <div class="quantity-selector border border-gray-300 dark:border-gray-600 rounded-md">
-              <button onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})" class="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md">-</button>
-              <input type="number" min="1" value="${item.quantity}" class="form-input w-12 text-center border-0 focus:ring-0" 
-                onchange="updateCartQuantity(${item.id}, parseInt(this.value))">
-              <button onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})" class="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md">+</button>
-            </div>
-
-            <button onclick="removeFromCart(${item.id})" class="text-red-600 hover:text-red-800">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        `;
-
-        cartItemsContainer.appendChild(cartItemElement);
-      });
-
-      updateOrderSummary();
-    }
-
-    function updateCartQuantity(cartItemId, newQuantity) {
-      updateCartItem(cartItemId, newQuantity);
-    }
-
     async function handleCheckout() {
       if (!currentUser) {
         showToast("error", "Please login to checkout");
@@ -1453,26 +1363,63 @@
         return;
       }
 
+      // --- Start of Transactional Checkout Logic ---
+      const productsToUpdate = [];
+      let checkoutSuccessful = true;
+      let failedProductNames = [];
+
+      // First, perform a pre-check to ensure all items are in stock
+      for (const item of cartItems) {
+        const product = products.find(p => p.id === item.productId);
+        if (!product) {
+          showToast("error", `Error: Product not found for item ID ${item.productId}. Please remove it from your cart.`);
+          checkoutSuccessful = false;
+          break; // Stop checkout if a product is missing
+        }
+        if (product.stock < item.quantity) {
+          failedProductNames.push(`${product.name} (only ${product.stock} left)`);
+          checkoutSuccessful = false;
+        } else {
+          productsToUpdate.push({ product, quantity: item.quantity });
+        }
+      }
+
+      if (!checkoutSuccessful) {
+        if (failedProductNames.length > 0) {
+          showToast("error", `Not enough stock for: ${failedProductNames.join(", ")}. Please adjust quantities.`);
+        } else {
+          showToast("error", "Checkout failed due to an unknown stock issue. Please check your cart.");
+        }
+        return; // Exit if pre-check fails
+      }
+
+      // If pre-check passes, proceed with updating stock
       try {
-        // Process checkout
-        cartItems.forEach(item => {
-          const product = products.find(p => p.id === item.productId);
-          if (product) {
-            product.stock -= item.quantity;
-          }
+        productsToUpdate.forEach(({ product, quantity }) => {
+          product.stock -= quantity; // Safely decrement stock
         });
 
         // Clear cart after successful checkout
         clearCart();
-        showToast("success", "Checkout completed successfully");
+        showToast("success", "Checkout completed successfully!");
         navigateTo("home-page");
+        renderProducts(); // Re-render products to show updated stock
       } catch (error) {
-        showToast("error", "Failed to complete checkout");
+        // This catch block might not be hit in a purely synchronous client-side model,
+        // but it's good practice for potential future async operations or complex logic.
+        console.error("Error during checkout stock update:", error);
+        showToast("error", "An error occurred during checkout. Please try again.");
       }
+      // --- End of Transactional Checkout Logic ---
     }
 
     function updateOrderSummary() {
-      if (cartItems.length === 0) return;
+      if (cartItems.length === 0) {
+        // Ensure summary is hidden if cart is empty
+        document.getElementById("order-summary").classList.add("hidden");
+        document.getElementById("empty-cart-message").classList.remove("hidden");
+        return;
+      }
 
       let subtotal = 0;
       cartItems.forEach(item => {
@@ -1625,11 +1572,11 @@
         return;
       }
 
-      // Check if amount exceeds restock limit - set to 1,000 units
-      if (amount > MAX_STOCK) {
-        showToast("error", `You can only restock up to ${MAX_STOCK} units at a time`);
-        return;
-      }
+      // Check if amount exceeds restock limit - set to 1,000 units (This check seems redundant with MAX_STOCK but keeping if intended for individual restock transaction limit)
+      // if (amount > currentUser.restockLimit) { // Assuming restockLimit is on user object for admins
+      //   showToast("error", `You can only restock up to ${currentUser.restockLimit} units at a time`);
+      //   return;
+      // }
 
       // Check if total stock would exceed MAX_STOCK units
       if (product.stock + amount > MAX_STOCK) {
@@ -1640,8 +1587,11 @@
       // Update stock
       product.stock += amount;
 
-      // Update UI
+      // Update UI on product detail page
       document.getElementById("product-detail-stock").textContent = `${product.stock} in stock`;
+      
+      // Also re-render products on home page to reflect stock change
+      renderProducts(); 
 
       showToast("success", `Restocked ${amount} units of ${product.name}`);
     }
